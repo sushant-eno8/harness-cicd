@@ -1,0 +1,34 @@
+pipeline:
+  name: Install
+  identifier: Install
+  projectIdentifier: default_project
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: github
+        build: <+input>
+  stages:
+    - stage:
+        name: Install
+        identifier: Install
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Docker
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Install
+                  identifier: Install
+                  spec:
+                    shell: Bash
+                    command: npm install
