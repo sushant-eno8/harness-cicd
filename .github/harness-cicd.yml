@@ -11,26 +11,42 @@ pipeline:
         build: <+input>
   stages:
     - stage:
-        name: Install Dependencies
-        identifier: Install_Dependencies
+        name: cdk
+        identifier: cdk
         description: ""
-        type: CI
+        type: Custom
         spec:
-          cloneCodebase: true
-          platform:
-            os: Linux
-            arch: Amd64
-          runtime:
-            type: Docker
-            spec: {}
           execution:
             steps:
-              - step:
-                  type: Run
-                  name: Install Dependencies
-                  identifier: Install_Dependencies
-                  spec:
-                    shell: Bash
-                    command: |-
-                      cd cdk
-                      npm install
+              - stepGroup:
+                  name: cdk
+                  identifier: cdk
+                  steps:
+                    - step:
+                        type: GitClone
+                        name: Git CLone
+                        identifier: Git_CLone
+                        spec:
+                          connectorRef: github
+                          build:
+                            type: branch
+                            spec:
+                              branch: main
+                    - step:
+                        type: AwsCdkBootstrap
+                        name: AwsCdkBootstrap_1
+                        identifier: AwsCdkBootstrap_1
+                        spec:
+                          connectorRef: account.harnessImage
+                          image: harness/aws-cdk-plugin:1.0.0-java
+                          appPath: cdk
+                          delegateSelectors:
+                            - helm-delegate
+                        timeout: 10m
+                  stepGroupInfra:
+                    type: KubernetesDirect
+                    spec:
+                      connectorRef: cdk
+            rollbackSteps: []
+          serviceDependencies: []
+        tags: {}
