@@ -13,7 +13,7 @@ pipeline {
                 }
             }
         }
-
+        // This is optional stage, also cdk is installed on server itself
         stage('CDK Bootstrap') {
             steps {
                 withAWS(credentials: 'aws-credentials', region: "${AWS_REGION}") {
