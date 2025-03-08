@@ -38,7 +38,7 @@ pipeline:
                         identifier: AwsCdkBootstrap_1
                         spec:
                           connectorRef: account.harnessImage
-                          image: harness/aws-cdk-plugin:1.0.0-java
+                          image: contino/aws-cdk
                           appPath: harness-cicd/cdk
                           delegateSelectors:
                             - docker-delegate
