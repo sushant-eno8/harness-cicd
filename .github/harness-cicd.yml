@@ -43,6 +43,16 @@ pipeline:
                           delegateSelectors:
                             - docker-delegate
                         timeout: 10m
+                    - step:
+                        type: AwsCdkDeploy
+                        name: AwsCdkDeploy_1
+                        identifier: AwsCdkDeploy_1
+                        spec:
+                          connectorRef: account.harnessImage
+                          image: contino/aws-cdk
+                          appPath: harness-cicd/cdk
+                          provisionerIdentifier: cdk
+                        timeout: 10m
                   stepGroupInfra:
                     type: KubernetesDirect
                     spec:
