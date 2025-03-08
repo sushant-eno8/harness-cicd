@@ -39,7 +39,7 @@ pipeline:
                         spec:
                           connectorRef: account.harnessImage
                           image: harness/aws-cdk-plugin:1.0.0-java
-                          appPath: cdk
+                          appPath: harness-cicd/cdk
                           delegateSelectors:
                             - helm-delegate
                         timeout: 10m
