@@ -41,7 +41,7 @@ pipeline:
                           image: harness/aws-cdk-plugin:1.0.0-java
                           appPath: harness-cicd/cdk
                           delegateSelectors:
-                            - helm-delegate
+                            - docker-delegate
                         timeout: 10m
                   stepGroupInfra:
                     type: KubernetesDirect
