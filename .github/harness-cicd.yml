@@ -39,7 +39,7 @@ pipeline:
                         spec:
                           connectorRef: account.harnessImage
                           image: sushanteno8/harness:latest
-                          appPath: harness-cicd/cdk
+                          appPath: cdk
                           delegateSelectors:
                             - docker-delegate
                         timeout: 10m
@@ -50,7 +50,7 @@ pipeline:
                         spec:
                           connectorRef: account.harnessImage
                           image: sushanteno8/harness:latest
-                          appPath: harness-cicd/cdk
+                          appPath: cdk
                           provisionerIdentifier: cdk
                         timeout: 10m
                   stepGroupInfra:
