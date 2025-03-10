@@ -43,6 +43,23 @@ pipeline:
                             AWS_SECRET_ACCESS_KEY: <+secrets.getValue("AWS_SECRET_ACCESS_KEY")>
                             AWS_DEFAULT_REGION: <+secrets.getValue("AWS_DEFAULT_REGION")>
                         timeout: 10m
+                    - step:
+                        type: AwsCdkSynth
+                        name: AwsCdkSynth_1
+                        identifier: AwsCdkSynth_1
+                        spec:
+                          connectorRef: account.harnessImage
+                          envVariables:
+                            AWS_ACCESS_KEY_ID: <+secrets.getValue("AWS_ACCESS_KEY_ID")>
+                            AWS_SECRET_ACCESS_KEY: <+secrets.getValue("AWS_SECRET_ACCESS_KEY")>
+                            AWS_DEFAULT_REGION: <+secrets.getValue("AWS_DEFAULT_REGION")>
+                          image: sushanteno8/harness:v4
+                          resources:
+                            limits:
+                              memory: 1000Mi
+                              cpu: 1000m
+                          exportTemplate: false
+                        timeout: 10m
                   stepGroupInfra:
                     type: KubernetesDirect
                     spec:
