@@ -41,7 +41,7 @@ pipeline:
                           image: sushanteno8/harness:v4
                           appPath: cdk
                           delegateSelectors:
-                            - helm-delegate
+                            - docker-delegate
                           resources:
                             limits:
                               memory: 2000Mi
