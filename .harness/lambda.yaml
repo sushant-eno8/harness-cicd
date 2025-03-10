@@ -41,7 +41,7 @@ pipeline:
                           envVariables:
                             AWS_ACCESS_KEY_ID: <+secrets.getValue("AWS_ACCESS_KEY_ID")>
                             AWS_SECRET_ACCESS_KEY: <+secrets.getValue("AWS_SECRET_ACCESS_KEY")>
-                            AWS_REGION: <+secrets.getValue("AWS_REGION")>
+                            AWS_DEFAULT_REGION: <+secrets.getValue("AWS_DEFAULT_REGION")>
                         timeout: 10m
                   stepGroupInfra:
                     type: KubernetesDirect
