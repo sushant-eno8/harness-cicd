@@ -38,7 +38,7 @@ pipeline:
                         identifier: AwsCdkBootstrap_1
                         spec:
                           connectorRef: account.harnessImage
-                          image: sushanteno8/harness:v2
+                          image: sushanteno8/harness:v4
                           appPath: cdk
                           delegateSelectors:
                             - docker-delegate
