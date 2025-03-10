@@ -42,6 +42,10 @@ pipeline:
                           appPath: cdk
                           delegateSelectors:
                             - helm-delegate
+                          resources:
+                            limits:
+                              memory: 2000Mi
+                              cpu: 1000m
                         timeout: 10m
                     - step:
                         type: AwsCdkDeploy
