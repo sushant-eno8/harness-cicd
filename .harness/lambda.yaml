@@ -59,6 +59,9 @@ pipeline:
                               memory: 1000Mi
                               cpu: 1000m
                           exportTemplate: false
+                          commandOptions:
+                            - cdk synth
+                          appPath: harness-cicd/cdk
                         timeout: 10m
                   stepGroupInfra:
                     type: KubernetesDirect
