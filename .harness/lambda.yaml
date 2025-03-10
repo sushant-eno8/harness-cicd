@@ -38,6 +38,10 @@ pipeline:
                             limits:
                               memory: 1000Mi
                               cpu: 1000m
+                          envVariables:
+                            AWS_ACCESS_KEY_ID: <+secrets.getValue("AWS_ACCESS_KEY_ID")>
+                            AWS_SECRET_ACCESS_KEY: <+secrets.getValue("AWS_SECRET_ACCESS_KEY")>
+                            AWS_REGION: <+secrets.getValue("AWS_REGION")>
                         timeout: 10m
                   stepGroupInfra:
                     type: KubernetesDirect
