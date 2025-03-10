@@ -41,7 +41,7 @@ pipeline:
                           image: sushanteno8/harness:v4
                           appPath: cdk
                           delegateSelectors:
-                            - docker-delegate
+                            - helm-delegate
                         timeout: 10m
                     - step:
                         type: AwsCdkDeploy
