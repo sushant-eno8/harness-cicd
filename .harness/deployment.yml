@@ -61,6 +61,12 @@ pipeline:
                               memory: 1000Mi
                               cpu: 1000m
                         timeout: 10m
+                        failureStrategies:
+                          - onFailure:
+                              errors:
+                                - AllErrors
+                              action:
+                                type: MarkAsFailure
                   stepGroupInfra:
                     type: KubernetesDirect
                     spec:
