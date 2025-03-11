@@ -14,12 +14,12 @@ pipeline:
           execution:
             steps:
               - stepGroup:
-                  name: deployment
+                  name: Development
                   identifier: deployment
                   steps:
                     - step:
                         type: GitClone
-                        name: GitClone_1
+                        name: Clone Repository
                         identifier: GitClone_1
                         spec:
                           connectorRef: github
@@ -29,7 +29,7 @@ pipeline:
                               branch: main
                     - step:
                         type: AwsCdkSynth
-                        name: AwsCdkSynth_1
+                        name: CDK Synth
                         identifier: AwsCdkSynth_1
                         spec:
                           connectorRef: account.harnessImage
@@ -46,8 +46,8 @@ pipeline:
                         timeout: 10m
                     - step:
                         type: AwsCdkDeploy
-                        name: AwsCdkDeploy_1
-                        identifier: AwsCdkDeploy_1
+                        name: CDK Deploy
+                        identifier: CDK_Deploy
                         spec:
                           connectorRef: account.harnessImage
                           envVariables:
@@ -67,7 +67,7 @@ pipeline:
                       connectorRef: deployment
               - step:
                   type: HarnessApproval
-                  name: Approval
+                  name: Production Approval
                   identifier: Approval
                   spec:
                     approvalMessage: Please review the following information and approve the pipeline progression
@@ -85,8 +85,18 @@ pipeline:
                   identifier: production
                   steps:
                     - step:
+                        type: GitClone
+                        name: Production Clone
+                        identifier: Production_Clone
+                        spec:
+                          connectorRef: github
+                          build:
+                            type: branch
+                            spec:
+                              branch: main
+                    - step:
                         type: AwsCdkBootstrap
-                        name: AwsCdkBootstrap_1
+                        name: CDK Bootstrap
                         identifier: AwsCdkBootstrap_1
                         spec:
                           connectorRef: account.harnessImage
@@ -100,6 +110,7 @@ pipeline:
                               memory: 1000Mi
                               cpu: 1000m
                         timeout: 10m
+                      contextType: Pipeline
                   stepGroupInfra:
                     type: KubernetesDirect
                     spec:
