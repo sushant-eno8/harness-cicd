@@ -44,10 +44,40 @@ pipeline:
                               memory: 1000Mi
                               cpu: 1000m
                         timeout: 10m
+                    - step:
+                        type: AwsCdkDeploy
+                        name: AwsCdkDeploy_1
+                        identifier: AwsCdkDeploy_1
+                        spec:
+                          connectorRef: account.harnessImage
+                          envVariables:
+                            AWS_ACCESS_KEY_ID: <+secrets.getValue("AWS_ACCESS_KEY_ID")>
+                            AWS_SECRET_ACCESS_KEY: <+secrets.getValue("AWS_SECRET_ACCESS_KEY")>
+                            AWS_DEFAULT_REGION: <+secrets.getValue("AWS_DEFAULT_REGION")>
+                          image: sushanteno8/harness:v5
+                          provisionerIdentifier: test
+                          resources:
+                            limits:
+                              memory: 1000Mi
+                              cpu: 1000m
+                        timeout: 10m
                   stepGroupInfra:
                     type: KubernetesDirect
                     spec:
                       connectorRef: deployment
             rollbackSteps: []
+            "":
+              type: AwsCdkDeploy
+              name: AwsCdkDeploy_1
+              identifier: AwsCdkDeploy_1
+              spec:
+                connectorRef: account.harnessImage
+                envVariables:
+                  AWS_ACCESS_KEY_ID: <+secrets.getValue("AWS_ACCESS_KEY_ID")>
+                  AWS_SECRET_ACCESS_KEY: <+secrets.getValue("AWS_SECRET_ACCESS_KEY")>
+                  AWS_DEFAULT_REGION: <+secrets.getValue("AWS_DEFAULT_REGION")>
+                image: sushanteno8/harness:v5
+                provisionerIdentifier: test1
+              timeout: 10m
           serviceDependencies: []
         tags: {}
