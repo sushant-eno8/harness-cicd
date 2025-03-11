@@ -1,0 +1,53 @@
+pipeline:
+  name: deployment
+  identifier: deployment
+  projectIdentifier: default_project
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: deployment
+        identifier: deployment
+        description: ""
+        type: Custom
+        spec:
+          execution:
+            steps:
+              - stepGroup:
+                  name: deployment
+                  identifier: deployment
+                  steps:
+                    - step:
+                        type: GitClone
+                        name: GitClone_1
+                        identifier: GitClone_1
+                        spec:
+                          connectorRef: github
+                          build:
+                            type: branch
+                            spec:
+                              branch: main
+                    - step:
+                        type: AwsCdkSynth
+                        name: AwsCdkSynth_1
+                        identifier: AwsCdkSynth_1
+                        spec:
+                          connectorRef: account.harnessImage
+                          envVariables:
+                            AWS_ACCESS_KEY_ID: <+secrets.getValue("AWS_ACCESS_KEY_ID")>
+                            AWS_SECRET_ACCESS_KEY: <+secrets.getValue("AWS_SECRET_ACCESS_KEY")>
+                            AWS_DEFAULT_REGION: <+secrets.getValue("AWS_DEFAULT_REGION")>
+                          image: sushanteno8/harness:v4
+                          appPath: ""
+                          resources:
+                            limits:
+                              memory: 1000Mi
+                              cpu: 1000m
+                        timeout: 10m
+                  stepGroupInfra:
+                    type: KubernetesDirect
+                    spec:
+                      connectorRef: deployment
+            rollbackSteps: []
+          serviceDependencies: []
+        tags: {}
